@@ -1,0 +1,157 @@
+// 预习 5 的代码, 需要安装 2.5.20 版本的开发软件
+// 安装方法见下面的链接（现在已经支持运行程序一键安装）
+// https://github.com/kuaibiancheng/ProjectOpenCourse/wiki/安装配置方法
+
+
+// 第 5 课预习
+//
+// 除了讲作业 4 之外，本课还会介绍一个全新的概念——面向对象编程
+//
+// =====
+// 类 与 面向对象
+// =====
+//
+// 语言自带的数据类型有限, 要表示复杂的数据, 必须有复杂的数据类型
+// Gualang 提供一种机制被称之为 面向对象(Object Oriented) 用于表示复杂的数据类型
+//
+// Gualang 面向对象编程中的术语 类, 就是语言提供的自定义数据类型的机制
+// 它可以方便地表示复杂类型, 并能实现更多功能
+// 例子如下
+//
+
+
+// class 是用来声明 类 的特殊语法
+// Student 是类名, 一般首字母大写(驼峰命名法)
+// 这是一个定义类的标准方式
+const Student = class() {
+    // 定义一个 方法 (类里面的函数叫 方法, 单纯只是名字不同)
+    // 注意这里定义函数的方式是很特殊的, 和平时定义函数不一样
+    // new 是一个特殊的函数名字, 它会在实例化类的时候被调用(见下面的使用方法和说明)
+    const new = function(name, height) {
+        // 用 this.变量名 来创造一个只有类的实例才能访问的变量, 这句话上课后会解释
+        // 定义实例变量的时候必须用 var 来修饰
+        var this.name = 'gua'
+        var this.height = 169
+    }
+}
+
+
+const demoClass = function() {
+    // 对 类 调用得到一个「类的实例」, 这个过程术语称之为 实例化
+    // 赋值给变量 s1, 这时候 s1 就是一个 Student 类型(也就是对象 Student 的实例)
+    // 也称之为 对象(我们既把类叫做对象, 也把类的实例叫做对象)
+    // 调用 Student 类的 new 函数生成 s1 实例
+    var s1 = Student.new('gua', 169)
+    // var s1 = Student.new(name='gua', height='169')
+
+
+    // 可以通过 . 语法访问对象的属性(也就是 new 函数中用 this.变量名 创造的变量)
+    // 类的变量叫做 属性(单纯只是名字不同, 其实就是类的实例才能访问的变量)
+    log('class, s1', s1.name, s1.height)
+    // 输出如下
+    // class, s1 gua 169
+
+    // ==
+    // 可以改变 s1 的属性值
+    s1.name = 'xiaogua'
+    s1.height = 1.69
+    log('class, s1 属性', s1.name, s1.height)
+    // 输出如下
+    // class, s1 属性 xiaogua 1.69
+
+    // ==
+    // 可以创建多个互相独立的实例
+    // 下面的例子可以看到, s2 和 s3 是互相独立的
+    var s2 = Student.new(name='gua II', height=169)
+    var s3 = Student.new(name='三代瓜', height=169)
+    log('s2 和 s3 是两个独立的实例', s2.name, s3.name)
+}
+
+demoClass()
+
+
+
+// ==
+// 可以给类增加一些方法(函数)
+const StudentInfo = class() {
+    const new = function(name, height) {
+        var this.name = name
+        var this.height = height
+    }
+
+    const show = function() {
+        log('student info', this.name, this.height)
+    }
+
+    const update = function(name, height) {
+        this.name = name
+        this.height = height
+    }
+}
+
+const demoClassMethod = function() {
+    var info = StudentInfo.new('gua', 169)
+
+    // 调用 info 的 show 方法
+    info.show()
+
+    // 调用 info 的 update 方法
+    info.update('xiao', 169.98)
+
+    info.show()
+}
+
+demoClassMethod()
+
+
+
+
+// ==
+// 封装, 上面 show 和 update 就是封装的例子
+// 意思是说把一些操作做好, 对外部来说只需要简单调用即可
+//
+
+
+
+
+// =
+// 继承
+// 继承是说, 父类的东西你可以直接拿来用
+const Phone = class() {
+    const new = function() {
+        var this.price = 0
+    }
+    const off = function() {
+        log('手机, 关机')
+    }
+    const on = function() {
+        log('手机, 开机')
+    }
+}
+
+// 注意, AnZhuo 类继承自 Phone 类, 写法如下
+var AnZhuo = class(Phone) {
+    const on = function() {
+        log('安卓, 开机')
+    }
+}
+
+// 初始化并调用
+var p = Phone.new()
+p.on()
+p.off()
+
+
+var a = AnZhuo.new()
+// 因为 AnZhuo 实现了自己的 on 所以这里调用的是自己的
+a.on()
+
+
+// 下面的这句 a.off() 能调用成功, 虽然 AnZhuo 类没有实现 off() 方法
+// 但是 Gualang 会自动在父类中查找 off() 方法
+// off 是继承自父类的方法, 所以被调用了
+a.off()
+
+
+// =
+// 类主要的优势就是可封装方法, 可通过继承复用代码
