@@ -1,0 +1,106 @@
+const jump = function(x, y) {
+    penup()
+    goto(x, y)
+    pendown()
+}
+
+const square = function(x, y, length) {
+    jump(x,y)
+    setHeading(0)
+    var i = 0
+    while (i < 4) {
+        forward(length)
+        right(360/4)
+        i = i + 1
+    }
+}
+// square(20,20,100)
+
+const rect = function(x, y, w, h) {
+    jump(x,y)
+    setHeading(0)
+    var i = 0
+    while(i < 2){
+        forward(w)
+        right(360/4)
+        forward(h)
+        right(360/4)
+        i = i + 1
+    }
+}
+// rect(-100,-100,100,200)
+
+const square5 = function() {
+    var j = 0
+    var space = 20
+    while(j < 5){
+        square(space, 20, 30)
+        space = space + 30
+        j = j + 1
+    }
+}
+// square5()
+
+const square5_10 = function() {
+    var j = 0
+    var space = 20
+    while(j < 5){
+        square(space, 20, 30)
+        space = space + 30 + 10
+        j = j + 1
+    }
+}
+// square5_10()
+
+const square_line = function(x, y, n, space, len) {
+    var j = 0
+    while(j < n){
+        square(x, y, len)
+        x =  x + space + len
+        j = j + 1
+    }
+}
+// square_line(10,10,3,20,30)
+
+const square_square = function(x, y, space, len, n, m) {
+    var i = 0
+    while(i < m){
+        square_line(x, y, n, space, len)
+        y = y + len + space
+        i = i + 1
+    }
+}
+// square_square(10,10,5,10,5,3)
+
+
+const rect_line = function(x, y, w, h, n, space) {
+    var i = 0
+    while( i < n){
+        rect(x, y, w, h)
+        x = x + w + space
+        i = i + 1
+    }
+}
+// rect_line(10, 10, 30, 20, 4, 5)
+
+const rect_square = function(x, y, space, w, h, n, m) {
+    var i = 0
+    while(i < m){
+        rect_line(x, y, w, h, n, space)
+        y = y + h + space
+        i = i + 1
+    }
+}
+// rect_square(10,10,5,30,20,4,5)
+
+const polygon = function(x, y, n, length) {
+    var i = 0
+    jump(x, y)
+    setHeading(0)
+    while(i < n){
+        forward(length)
+        right(360/n)
+        i = i + 1
+    }
+}
+polygon(10,10,10,30)

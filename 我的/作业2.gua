@@ -1,0 +1,133 @@
+const jump = function(x, y) {
+    penup()
+    goto(x, y)
+    pendown()
+}
+
+// 多边形
+const polygon = function(x, y, n, len){
+    jump(x, y)
+    setHeading(0)
+    var i = 0
+    while(i < n){
+        forward(len)
+        right(360/n)
+        i = i + 1
+    }
+}
+
+const circle = function(x, y, r){
+    var n = 81
+    var len = 2 * 3.14159 * r / n
+    polygon(x, y-r, n, len)
+}
+// circle(0,0,1)
+// circle(0,0,50)
+
+// 矩形
+const rect = function(x, y, w, h) {
+    jump(x,y)
+    setHeading(0)
+    var i = 0
+    while(i < 2){
+        forward(w)
+        right(360/4)
+        forward(h)
+        right(360/4)
+        i = i + 1
+    }
+}
+
+const center_rect = function(x, y, w, h){
+    rect(x-w/2, y-h/2, w, h)
+}
+// center_rect(0,0,100,100)
+
+// 五角星
+const penta = function(x, y, length){
+    jump(x,y)
+    var i = 0
+    while(i < 5){
+        forward(length)
+        right(144)
+        i = i + 1
+    }
+}
+// penta(10,10,30)
+
+const japan = function(x, y){
+    var w = 100
+    var h = 50
+    center_rect(x, y, w, h)
+    circle(x, y, h*3/5/2)
+}
+// japan(0,0)
+
+const sin = function(degree) {
+    // 这里的 sin 函数接受弧度作为参数
+    // 我们这个函数接受角度, 下面是弧度转角度的公式
+    var radians = degree * math.pi / 180
+    return math.sin(radians)
+}
+
+const cos = function(degree) {
+    var radians = degree * math.pi / 180
+    return math.cos(radians)
+}
+
+// 五角星
+const penta1 = function(x, y, r){
+    var du = 18
+    var y1 = y - r*sin(18)
+    var x1 = x - r*cos(18)
+    penta(x1, y1, r*cos(18)*2)
+}
+// penta1(0,0,50)
+
+const china = function(x, y){
+    var w = 300
+    var h = 200
+    rect(x, y, w, h)
+    w = w/2
+    h = h/2
+    penta1(x+w*5/15, y+h*5/10, w*3/15)
+    penta1(x+w*10/15, y+h*2/10, w*1/15)
+    penta1(x+w*12/15, y+h*4/10, w*1/15)
+    penta1(x+w*12/15, y+h*7/10, w*1/15)
+    penta1(x+w*10/15, y+h*9/10, w*1/15)
+}
+// china(-100,-100)
+
+const france = function(x, y){
+    var w = 300/3
+    var i = 0
+    while(i < 3){
+        rect(x, y, w, 200)
+        x = x + w
+        i = i + 1 
+    }
+}
+// france(-100,-100)
+
+
+const germany = function(x, y){
+    var h = 200/3
+    var i = 0
+    while(i < 3){
+        rect(x, y, 300, h)
+        y = y + h
+        i = i + 1 
+    }
+}
+// germany(-100,-100)
+
+
+const gambia = function(x, y){
+    var w = 300
+    var h = 200
+    center_rect(x, y, w, h)
+    center_rect(x, y, w, h/3)
+    center_rect(x, y, w, h*6/24)
+}
+// gambia(0,0)
+
