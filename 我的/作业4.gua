@@ -1,0 +1,275 @@
+//字符串大小写转化很巧妙，不需要什么 ascii 码 
+// 凯撒密码：左移 n 位编码，右移 n 位解码
+// 凯撒密码实现：可以先从 n = 1 开始实现
+// 再扩展到 n 和边界情况，思路会简单很多
+// 测试函数
+const ensure = function(condition, message) {
+    // 在条件不成立的时候, 输出 message
+    if (not condition) {
+        log('*** 测试失败:', message)
+    } else {
+        log('||| 测试成功')
+    }
+}
+
+
+
+
+
+const find = function(s1, s2) {
+    var i = 0
+    var s = -1
+    while(i < s1.length()){
+        var t = s1[i]
+        if(t == s2){
+            s = i
+            break
+        }
+        i = i + 1
+    }
+    return s
+}
+const test_find = function() {
+    ensure(find('hello', 'a') == -1, 'find 1')
+    ensure(find('hello', 'e') == 1, 'find 2')
+    ensure(find('hello', 'l') == 2, 'find 3')
+}
+
+// test_find()
+
+const uppercase = function(s) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower, s[i])
+        r = r + upper[index]
+        i = i + 1
+    }
+    return r
+}
+
+const test_uppercase = function() {
+    ensure(uppercase('hello') == 'HELLO', 'uppercase 1')
+    ensure(uppercase('gua') == 'GUA', 'uppercase 2')
+}
+
+// test_uppercase()
+
+const lowercase1 = function(s) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var upperIndex = find(upper,s[i])
+        if(upperIndex != -1){
+            r = r + lower[upperIndex]
+        }else{
+            r = r + s[i]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_lowercase1 = function() {
+    ensure(lowercase1('heLLo') == 'hello', 'lowercase1 1')
+    ensure(lowercase1('gua') == 'gua', 'lowercase1 2')
+    ensure(lowercase1('GW') == 'gw', 'lowercase1 3')
+}
+
+// test_lowercase1()
+
+const uppercase1 = function(s) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index!=-1){
+            r = r + upper[index]
+        }else{
+            r = r + s[i]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_uppercase1 = function() {
+    ensure(uppercase1('helLo') == 'HELLO', 'uppercase1 1')
+    ensure(uppercase1('gUA') == 'GUA', 'uppercase1 2')
+}
+
+// test_uppercase1()
+
+
+const encode1 = function(s) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index==25){
+            r = r + 'a'
+        }else{
+            r = r + lower[index+1]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_encode1 = function() {
+    ensure(encode1('afz') == 'bga', 'encode1 1')
+    ensure(encode1('gw') == 'hx', 'encode1 2')
+}
+
+// test_encode1()
+
+const decode1 = function(s) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index == 0){
+            r = r + 'z'
+        }else{
+            r = r + lower[index-1]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_decode1 = function() {
+    ensure(decode1('bga') == 'afz', 'decode1 1')
+    ensure(decode1('hx') == 'gw', 'decode1 2')
+}
+
+// test_decode1()
+
+const encode2 = function(s, shift) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index + shift > 26){
+            // y 3 24 b
+            r = r + lower[shift + index - 25 -1]
+        }else{
+            r = r + lower[index + shift]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_encode2 = function() {
+    ensure(encode2('afz', 2) == 'chb', 'encode2 1')
+    ensure(encode2('gw', 3) == 'jz', 'encode2 2')
+}
+
+// test_encode2()
+
+
+const decode2 = function(s, shift) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index - shift < 0){
+            // 25+index-shift+1
+            // b shift=3,index=1,r=y
+            r = r + lower[25 + index - shift + 1]
+        }else{
+            r = r + lower[index-shift]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_decode2 = function() {
+    ensure(decode2('chb', 2) == 'afz', 'decode2 1')
+    ensure(decode2('jz', 3) == 'gw', 'decode2 2')
+}
+
+// test_decode2()
+
+const encode3 = function(s, shift) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index == -1){
+            r = r + s[i]
+        }else if(index + shift > 26){
+            // y 3 24 b
+            r = r + lower[shift + index - 25 -1]
+        }else{
+            r = r + lower[index + shift]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_encode3 = function() {
+    ensure(encode3('a fz', 2) == 'c hb', 'encode3 1')
+    ensure(encode3('g#w', 3) == 'j#z', 'encode3 2')
+}
+// test_encode3()
+
+
+const decode3 = function(s, shift) {
+    var lower = 'abcdefghijklmnopqrstuvwxyz'
+    var r = ''
+    var i = 0
+    while(i < s.length()){
+        var index = find(lower,s[i])
+        if(index == -1){
+            r = r + s[i]
+        }else if(index - shift < 0){
+            // 25+index-shift+1
+            // b shift=3,index=1,r=y
+            r = r + lower[25 + index - shift + 1]
+        }else{
+            r = r + lower[index-shift]
+        }
+        i = i + 1
+    }
+    return r
+}
+
+const test_decode3 = function() {
+    ensure(decode3('ch#b', 2) == 'af#z', 'decode3 1')
+    ensure(decode3('j z', 3) == 'g w', 'decode3 2')
+}
+
+// test_decode3()
+
+var my = function(s){
+    var t = lowercase1(s)
+    var i = 10
+    while(i > 0){
+        var r = decode3(t,i)
+        log(i,r)
+        i = i -1
+    }
+}
+my('VRPHWLPHV L ZDQW WR FKDW ZLWK BRX,EXW L KDYH QR UHDVRQ WR FKDW ZLWK BRX')
+
+
+
+
+
+
+

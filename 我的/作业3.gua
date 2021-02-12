@@ -1,3 +1,6 @@
+//遍历数组：先声明返回值（结果），然后遍历每个元素，依次进行处理
+//
+
 const product = function(array) {
     var i = 0
     var r = 1
@@ -8,3 +11,96 @@ const product = function(array) {
     log(r)
 }
 // product([1,2,3,4])
+
+
+const abs = function(n) {
+    if(n > 0){
+        return n
+    }else{
+        return -n
+    }
+}
+// log(abs(-1))
+
+
+const sum = function(array) {
+    // 先设置一个变量 s 用来存数组的和
+    var s = 0
+    var i = 0
+    while (i < array.length()) {
+        var n = array[i]
+        s = s + n
+        i = i + 1
+    }
+    return s
+}
+
+
+const average = function(array) {
+    var s = sum(array)
+    return s/array.length()
+}
+// log(average([1,2,3]))
+
+
+const min = function(array) {
+    var i = 0
+    var s = array[0]
+    while(i < array.length()){
+        var n = array[i]
+        if(s > n){
+            s = n
+        }
+        i = i + 1
+    }
+    return s
+}
+// log(min([2,3,1,0.1]))
+
+const sum1 = function(n) {
+    var s = 0
+    var i = 1
+    while(i <= n){
+        i = i + 1
+        if(i % 2 == 0){
+            s = s - i
+        }else{
+            s = s + i
+        }
+    }
+    return s
+}
+// log(sum1(4))
+
+const sum2 = function(n) {
+    var s = 0
+    var i = 1
+    while(i <= n){
+        if(i % 2 == 0 or i == 1){
+            s = s + i
+        }else{
+            s = s - i
+        }
+        i = i + 1
+    }
+    return s
+}
+// log(sum2(3))
+
+
+
+const fac = function(n) {
+    var s = 1
+    var i = 1
+    while(i <= n){
+        s = s * i
+        i = i + 1
+    }
+    return s
+}
+// log(fac(5))
+
+
+
+
+

@@ -1,3 +1,7 @@
+//逻辑拆分：国旗 = 矩形 + 五角星
+// 每个图案之间的共同点是中心点或左上角点的坐标 
+
+
 const jump = function(x, y) {
     penup()
     goto(x, y)
@@ -96,7 +100,7 @@ const china = function(x, y){
     penta1(x+w*12/15, y+h*7/10, w*1/15)
     penta1(x+w*10/15, y+h*9/10, w*1/15)
 }
-// china(-100,-100)
+china(-100,-100)
 
 const france = function(x, y){
     var w = 300/3

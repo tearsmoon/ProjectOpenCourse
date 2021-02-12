@@ -1,3 +1,13 @@
+// 逻辑拆分：画矩形方阵 = 画矩形 + 画一排矩形 + 多次画一排矩形
+// const 吃晚饭 = function() {
+//     洗手()
+//     坐下()
+//     吃饭()
+//     洗碗()
+// }
+
+
+
 const jump = function(x, y) {
     penup()
     goto(x, y)
@@ -70,7 +80,7 @@ const square_square = function(x, y, space, len, n, m) {
         i = i + 1
     }
 }
-// square_square(10,10,5,10,5,3)
+square_square(10,10,5,10,5,3)
 
 
 const rect_line = function(x, y, w, h, n, space) {
