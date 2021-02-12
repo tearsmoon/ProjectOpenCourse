@@ -1,0 +1,10 @@
+const product = function(array) {
+    var i = 0
+    var r = 1
+    while( i < array.length()){
+        r = r*array[i]
+        i = i + 1
+    }
+    log(r)
+}
+// product([1,2,3,4])
